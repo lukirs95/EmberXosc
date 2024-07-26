@@ -18,8 +18,8 @@
   "author": "Lucas Kirsche (@NEP)",
   "license": "ISC",
   "dependencies": {
-    "emberplus-connection": "file:../sofie-emberplus-connection",
-    "node-osc": "^9.1.3"
+    "node-osc": "^9.1.3",
+    "emberplus-connection": "https://github.com/lukirs95/sofie-emberplus-connection"
   },
   "devDependencies": {
     "@types/node-osc": "^6.0.3"
