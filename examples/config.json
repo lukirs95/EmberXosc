@@ -1,0 +1,18 @@
+{
+	"ember_client": "10.199.128.150",
+	"osc_client": "10.199.128.251",
+	"parameter": [
+		{
+			"ember_path": "2.1.2.1.1",
+			"osc_path": "/afv/1"
+		},
+		{
+			"ember_path": "2.1.2.2.1",
+			"osc_path": "/afv/2"
+		},
+		{
+			"ember_path": "2.2.2.1.1.4.12.1",
+			"osc_path": "/fader/1"
+		}
+	]
+}
