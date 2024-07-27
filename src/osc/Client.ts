@@ -17,6 +17,15 @@ export class EXOoscClient extends EventEmitter {
     this._server.on('message', (message) => this.onMessage(message));
   }
 
+  destroy() {
+    if (this._client) {
+      this._client.close();
+    }
+    if (this._server) {
+      this._server.close();
+    }
+  }
+
   async send(path: string, args: any) {
     return new Promise<{ path: string; args: any }>((resolve, reject) => {
       this._client.send(path, args, (error) => {

@@ -1,7 +1,6 @@
 import { EmberClient } from 'emberplus-connection';
 import { EXOEmberRegistry } from './Registry';
 import { EventEmitter } from 'node:events';
-import { Parameter } from 'emberplus-connection/dist/model';
 import { EmberValue } from 'emberplus-connection/dist/types';
 
 export class EXOEmberClient extends EventEmitter {
@@ -9,9 +8,9 @@ export class EXOEmberClient extends EventEmitter {
   private _registry: EXOEmberRegistry;
   private _reconnect: boolean;
 
-  constructor(host: string, reconnect = false) {
+  constructor(host: string, port: number, reconnect = false) {
     super();
-    this._client = new EmberClient(host, 9000);
+    this._client = new EmberClient(host, port);
     this._client.on('connected', () => this.onConnect());
     this._client.on('disconnected', () => this.onDisconnect());
     this._client.on('error', (error) => this.onError(error));
@@ -54,7 +53,9 @@ export class EXOEmberClient extends EventEmitter {
     if (entry) {
       return this._client
         .setValue(entry.node, value, false)
-        .then((req) => req.response);
+        .then((req) => req.response)
+        .then((res) => value);
+      // .then((res) => res?.contents.value);
     }
     return Promise.reject(`${path} not found`);
   }
@@ -80,7 +81,6 @@ export class EXOEmberClient extends EventEmitter {
   }
 
   protected onConnect() {
-    console.log(`connected to ${this._client.host}`);
     this.emit('connected');
   }
 
@@ -88,8 +88,11 @@ export class EXOEmberClient extends EventEmitter {
     console.log(`disconnected from ${this._client.host}`);
     this.emit('disconnected');
     if (this._reconnect) {
-      console.log(`try reconnecting...`);
-      this.connect().catch((error) => this.onError(error));
+      this.emit('reconnect');
+      setTimeout(
+        () => this.connect().catch((error) => this.onError(error)),
+        3000
+      );
     }
   }
 
