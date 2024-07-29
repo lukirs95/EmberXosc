@@ -18,7 +18,7 @@ Format of the configuration file
     "osc_client": "localport:ip-address:remoteport",
     "parameter": [
         {
-            "ember_path: "1.2.3.4.5",
+            "ember_path": "1.2.3.4.5",
             "osc_path": "/osc/path/whatever"
         },
         {
